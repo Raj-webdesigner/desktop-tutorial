@@ -1,0 +1,400 @@
+<style>
+.section-{{ section.id }}{
+  {% if section.settings.background_image != blank %}
+  background-image: url({{ section.settings.background_image | image_url }});
+  {% endif %}
+  background-color: {{ section.settings.background_color }};
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  h2,p,a,h4{
+    margin:0;
+    font-family: var(--font-body-family);
+  }
+}
+.home-banner-image:before {
+  content: "";
+  padding-bottom: 48%;
+  display: block;
+  width: 100%;
+  height: 0px;
+}
+.bottom-slider {
+  display: flex;
+  gap: 8px;
+}
+.bottom-slider p span {
+  padding-left: 5px;
+}
+.home-image img.desktop-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.home-banner-image {
+  position: relative;
+  height: 100%;
+}
+.section-button:hover {
+  background: #000;
+  border: 1px solid transparent;
+  outline: 1px solid #000;
+}
+.section-button a:hover {
+  color: #fff;
+}
+.section-button {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #000;
+  display: inline-block;
+  border-radius: 5px;
+  outline: 1px solid transparent;
+}
+.hero-text-button .section-button,.hero-text-button h4,.hero-text-button h2{
+  opacity: 0;
+}
+.hero-text-button .section-button{
+  transform: translate(0, 10%);
+  transition: opacity 1.8s ease, transform 1.8s ease, outline 1.8s ease;
+}
+.hero-text-button h4{
+  transform: translate(0, -50%);
+  transition: opacity 1.8s ease, transform 1.8s ease, outline 1.8s ease;
+}
+.hero-text-button h2{
+  transform: translate(0, -20%);
+  transition: opacity 1.8s ease, transform 1.8s ease, outline 1.8s ease;
+}
+.hero-text-button h2 {
+  font-size:{{ section.settings.desktop_heading_scale }}px;
+  margin-block:20px 36px;
+  font-weight: 400;
+  line-height: 65px;
+}
+.slider-content.slick-active .banner-text-button .banner-content .hero-text-button .section-button,.slider-content.slick-active .banner-text-button .banner-content .hero-text-button h2,.slider-content.slick-active .banner-text-button .banner-content .hero-text-button h4{
+  transform: translate(0, 0%);
+  opacity: 1;
+}
+.bottom-slider p,.bottom-slider a{
+  font-size: {{ section.settings.desktop_body_scale }}px;
+  color: #000;
+  text-decoration: none;
+}
+.bottom-slider a{
+  border-bottom:1px solid #000;
+  font-weight: 600;
+}
+.hero-text-button .section-button a {
+  font-size: {{ section.settings.desktop_body_scale }}px;
+  padding: 10px 30px;
+}
+.section-button a {
+  text-decoration: none;
+  color: #000;
+  display: inline-block;
+}
+.slider-content.slick-active .banner-text-button .banner-content {
+  transform: translate(-15%, -50%);
+  opacity: 1;
+}
+.slider-content.slick-active .banner-text-name .bottom-button{
+  transform: translate(0%, 0%);
+  opacity: 1;
+}
+.banner-text-name .bottom-button{
+  opacity: 0;
+  transform: translate(-40%, 0%);
+  transition: opacity 1s ease, transform 1s ease, outline 1s ease;
+}
+.banner-content {
+  position: absolute;
+  top: 50%;
+  transform: translate(-15%, -20%);
+  left: 15%;
+  transition: transform 0.5s ease;
+  opacity: 0;
+}
+.bottom-button {
+  position: absolute;
+  right: 15%;
+  bottom: 40px;
+}
+.hero-text-button h4 {
+  font-size: 18px;
+}
+.home-banner-slider ul.slick-dots {
+  position: absolute;
+  top: 50%;
+  right: 3%;
+  transform: translate(-3%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.home-banner-slider ul.slick-dots li {
+  list-style: none;
+}
+.home-banner-slider ul.slick-dots li button{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid #000;
+  font-size: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.home-banner-slider ul.slick-dots li.slick-active button {
+  width: 14px;
+  height: 14px;
+  background: transparent;
+  border: 1px solid #000;
+}
+@media screen and (min-width:768px){
+  .mobile-image{
+    display:none;
+  }
+}
+@media screen and (max-width:767px){
+  .desktop-image{
+    display:none;
+  }
+  .section-{{ section.id }}  {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+}
+</style>
+
+<section class="home-banner-section section-{{ section.id }}">
+  <div class="home-banner-slider">
+    {% for block in section.blocks %}
+      <div class="slider-content">
+        <div class="home-banner-image">
+          <div class="home-image">
+            <img class="desktop-image" src="{{ block.settings.backgrround_image | image_url }}" width="auto" height="" />
+            <img class="mobile-image" scr="{{ block.settings.mobile_image |image_url }}" width="auto" height="" />
+          </div>
+        </div>
+        <div class="banner-text-button">
+          <div class="page-width">
+            <div class="banner-content">
+              <div class="hero-text-button">
+                <h4>{{ block.settings.banner_text }}</h4>
+                <h2>{{ block.settings.banner_head }}</h2>
+                <div class="section-button">
+                  <a href="{{ block.settings.banner_button_url }}">{{ block.settings.banner_button }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="banner-text-name">
+          <div class="page-width">
+            <div class="bottom-button">
+              <div class="bottom-slider">
+                <p>{{ block.settings.bottom_text }}</p>
+                <a href="{{ block.settings.bottom_url }}">{{ block.settings.bottom_button }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+<script>
+ $('.home-banner-slider').slick({
+  dots: true,
+  arrows:false,
+  autoplay:true,
+  autoplaySpeed:5000,
+  infinite: true,
+  speed: 500,
+  fade: true,
+  cssEase: 'linear'
+});
+</script>
+{% schema %}
+  {
+    "name": "Home Hero Banner",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Desktop Font"
+      },
+      {
+        "type": "range",
+        "id": "desktop_heading_scale",
+        "min": 10,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "label": "t:settings_schema.typography.settings.heading_scale.label",
+        "default": 28
+      },
+      {
+        "type": "header",
+        "content": "t:settings_schema.typography.settings.header__2.content"
+      },
+      {
+        "type": "range",
+        "id": "desktop_body_scale",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "t:settings_schema.typography.settings.body_scale.label",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Mobile Font"
+      },
+      {
+        "type": "range",
+        "id": "mobile_heading_scale",
+        "min": 10,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "t:settings_schema.typography.settings.heading_scale.label",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "mobile_body_scale",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "t:settings_schema.typography.settings.body_scale.label",
+        "default": 12
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+       },
+       {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background color"
+      },
+      {
+        "type" : "header",
+        "content" : "Desktop section padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Top padding",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Bottom padding",
+        "default": 36
+      },
+      {
+        "type" : "header",
+        "content" : "Mobile section padding"
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Top padding",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Bottom padding",
+        "default": 36
+      }
+    ],
+    "blocks": [
+      {
+        "type": "slide-slider",
+        "name":"Slider",
+        "settings": [
+          {
+            "id":"backgrround_image",
+            "type": "image_picker",
+            "label": "Desktop Image"
+          },
+          {
+            "id":"mobile_image",
+            "type": "image_picker",
+            "label": "Mobile Image"
+          },
+          {
+            "id":"banner_text",
+            "type": "text",
+            "label": "Baner Text"
+          },
+          {
+            "id":"banner_head",
+            "type": "text",
+            "label": "Banner Text Heading"
+          },
+          {
+            "id":"banner_button_url",
+            "type": "url",
+            "label": "Banner Button Url"
+          },
+          {
+            "id":"banner_button",
+            "type": "text",
+            "label": "Banner Button"
+          },
+          {
+            "id":"bottom_text",
+            "type": "text",
+            "label": "Bottom Text"
+          },
+          {
+            "id":"bottom_url",
+            "type": "url",
+            "label": "Bottom Url"
+          },
+          {
+            "id":"bottom_button",
+            "type": "text",
+            "label": "Bottom Button"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home Hero Banner"
+      }
+    ]
+  }
+{% endschema %}

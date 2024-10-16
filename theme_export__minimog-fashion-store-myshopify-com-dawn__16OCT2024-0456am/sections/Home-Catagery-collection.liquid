@@ -1,0 +1,429 @@
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<style>
+.section-{{ section.id }}{
+  {% if section.settings.background_image != blank %}
+  background-image: url({{ section.settings.background_image | image_url }});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  {% endif %}
+  {% if section.settings.background_color != blank %}
+    background-color: {{ section.settings.background_color }};
+  {% endif %}
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  position: relative;
+  h2,p,a,h4{
+    margin:0;
+    font-family: var(--font-body-family);
+  }
+}
+.catagery-section .page-width {
+  max-width: 90%;
+  margin: 0 0 0 auto;
+  padding: 0;
+}
+.catagery-section .section-heading h2 {
+  width: 50%;
+  font-size:{{ section.settings.desktop_heading_scale }}px;
+  line-height:calc({{ section.settings.desktop_heading_scale }}px + 10px);
+}
+.section-heading ul.arrow-slider {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin:0;
+  padding:0;
+}
+.section-heading ul.arrow-slider .catagery-button-number{
+  border: 1px solid #eee;
+  border-radius: 50px;
+  padding: 8px 10px;
+  display: flex;
+  gap: 10px;
+}
+.section-heading {
+  display: flex;
+  align-items: center;
+}
+.slider-content a {
+  text-decoration: none;
+  color: #000;
+}
+.slider-image-text .animation-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  scale: 1;
+  transition: scale 0.5s ease;
+  background: #eee;
+  overflow: hidden;
+}
+.slider-image-text:hover .animation-image {
+  scale: 1.08;
+}
+.slider-image-text:hover .animation-image img{
+  scale: 1;
+}
+.slider-image-text .animation-image img {
+  scale: 1.13;
+  transition: scale 0.5s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.collection-image:after {
+  content: "";
+  position: relative;
+  padding-top: 150%;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.slider-image-text {
+  padding:40px 20px;
+}
+.collection-text p{
+  font-size:{{ section.settings.desktop_body_scale }}px;
+  line-height:calc({{ section.settings.desktop_body_scale }}px + 10px);
+  color:#666;
+}
+.collection-text svg {
+  background: #fff;
+  width: 15px;
+  height: 15px;
+  padding: 15px;
+  border-radius: 50%;
+  scale: 1;
+  transition: scale 0.5s ease;
+}
+.slider-image-text:hover .collection-text svg {
+  background: #000;
+  color: #fff;
+}
+.collection-text svg:hover  {
+  scale: 1.2;
+  background: #000;
+  color: #fff;
+}
+.category-slider-content .slider-content,
+.category-slider-content {
+  position: relative;
+}
+ul.arrow-slider li .arrow {
+  background: transparent;
+  color: #000;
+  border:none;
+  cursor: pointer;
+  position: relative;
+}
+ul.arrow-slider li .arrow:after{
+  /* font-size:12px;
+  width: 100%;
+  height: 100%; */
+  display: none;
+  /* align-items: center;
+  justify-content: center; */
+}
+ul.arrow-slider li {
+  list-style: none;
+}
+.category-slider-content .slider-content .slider-content:hover {
+  scale:1.08;
+}
+.collection-text {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  width: -webkit-fill-available;
+  padding: 20px 30px;
+  align-items: center;
+}
+@media screen and (max-width:767px){
+  .section-{{ section.id }}  {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+  .catagery-section .section-heading h2 {
+    font-size:{{ section.settings.mobile_heading_scale }}px;
+    line-height:calc({{ section.settings.mobile_heading_scale }}px + 10px);
+  }
+}
+</style>
+<section class="catagery-section section-{{ section.id }}">
+  <div class="catagery-content page-width">
+    <div class="section-heading">
+      <h2>{{ section.settings.section_heading }}</h2>
+      <ul class="arrow-slider">
+        <div class="catagery-button-number">
+          <li class="prev"><div class="arrow swiper-button-prev"><i class="fa-solid fa-angle-left"></i></div></li>
+          <span class="pagingInfo"></span>
+          <li class="next"><div class="arrow swiper-button-next"><i class="fa-solid fa-angle-right"></i></div></li>
+        </div>
+      </ul>
+    </div>
+    <div class="category-slider-content">
+      <div class="category-collection">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+            {% assign selected_collection = collections[block.settings.collection_slide] %}
+              <div class="swiper-slide slider-image-text">
+                <div class="slider-overlay">
+                  <div class="slider-content">
+                    <a class="slider-link" href="{{ selected_collection.url }}">
+                      <div class="collection-image">
+                        <div class="animation-image">
+                          <img src="{{ selected_collection.featured_image | image_url }}" width="auto" height="auto">
+                        </div>
+                      </div>
+                      <div class="collection-text-count">
+                        <div class="collection-text">
+                          <span>
+                            <h2>{{ selected_collection.title }}</h2>
+                            <p>{{ selected_collection.products_count }} items</p>
+                          </span>
+                          {% render 'icon-arrow' %}
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var swiper = new Swiper('.mySwiper', {
+    slidesPerView: 4.5,
+    breakpoints: {
+      1920: {
+        slidesPerView: 4.5,
+      },
+      1028: {
+        slidesPerView: 4.5,
+      },
+      767: {
+        slidesPerView: 2.5,
+      },
+      425: {
+        slidesPerView: 1.5,
+      },
+      320: {
+        slidesPerView: 1.2,
+      },
+    },
+    pagination: {
+      el: '.pagingInfo',
+      type: 'custom',
+      renderCustom: function (swiper, current, total) {
+        return current + ' / ' + total;
+      }
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    loop: true,
+  });
+});
+
+
+  
+
+// $slickElement.slick({
+//   dots: false,
+//   prevArrow: $('.prev'),
+//   nextArrow: $('.next'),
+//   infinite: true,
+//   speed: 300,
+//   swipeToSlide: true,
+//   slidesToShow: 3.5,
+//   responsive: [
+//     {
+//       breakpoint: 1024,
+//       settings: {
+//         slidesToShow: 3,
+//         slidesToScroll: 3,
+//       }
+//     },
+//     {
+//       breakpoint: 600,
+//       settings: {
+//         slidesToShow: 2,
+//         slidesToScroll: 2
+//       }
+//     },
+//     {
+//       breakpoint: 480,
+//       settings: {
+//         slidesToShow: 1,
+//         slidesToScroll: 1
+//       }
+//     }
+//   ]
+// });
+</script>
+{% schema %}
+  {
+    "name": "Home Collection Section",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background image"
+       },
+       {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background color"
+      },
+      {
+        "id":"section_heading",
+        "type": "text",
+        "label": "Section Heading"
+      },
+      {
+        "type": "header",
+        "content": "Desktop Font"
+      },
+      {
+        "type": "range",
+        "id": "desktop_heading_scale",
+        "min": 10,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "label": "Desktop heading font",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "mobile_heading_scale",
+        "min": 10,
+        "max": 60,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile heading font",
+        "default": 26
+      },
+      {
+        "type": "header",
+        "content": "Body"
+      },
+      {
+        "type": "range",
+        "id": "desktop_body_scale",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "t:settings_schema.typography.settings.body_scale.label",
+        "default": 16
+      },
+      {
+        "type": "header",
+        "content": "Mobile Font"
+      },
+      {
+        "type": "range",
+        "id": "mobile_imgheading_scale",
+        "min": 10,
+        "max": 50,
+        "step": 1,
+        "unit": "px",
+        "label": "desktop Title heading",
+        "default": 28
+      },
+      {
+        "type": "range",
+        "id": "mobile_body_scale",
+        "min": 10,
+        "max": 30,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Title headingl",
+        "default": 12
+      },
+      {
+        "type" : "header",
+        "content" : "Desktop section padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Top padding",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Bottom padding",
+        "default": 36
+      },
+      {
+        "type" : "header",
+        "content" : "Mobile section padding"
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Top padding",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "mobile_padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Bottom padding",
+        "default": 36
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name":"Collection Slider",
+        "settings": [
+          {
+            "id":"collection_slide",
+            "type": "collection",
+            "label": "Collection select"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Home Collection Section"
+      }
+    ]
+  }
+{% endschema %}
