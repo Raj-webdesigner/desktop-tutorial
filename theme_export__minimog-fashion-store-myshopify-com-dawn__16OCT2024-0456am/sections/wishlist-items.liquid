@@ -1,0 +1,49 @@
+{% style %}
+.wishlist-items {
+  padding-block:100px 100px;
+}
+.wishlist-items ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.wishlist-items li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.wishlist-items img {
+  max-width: 200px;
+}
+p.wishlist-empty-message {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 30px;
+  line-height: 40px;
+}
+.wishlist-items button {
+  background-color: #f15a24;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+a.wishlist-image-title {
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  align-items: center;
+  gap:15px;
+}
+{% endstyle %}
+
+
+<div class="wishlist-items">
+  <div class="page-width">
+    <ul class="wishlist-list">
+    </ul>
+  <p class="wishlist-empty-message">Your wishlist is empty!</p>
+  </div>
+</div>
+

@@ -1,0 +1,412 @@
+{% comment %}
+  Renders a standard dropdown style menu for the header.
+
+  Usage:
+  {% render 'header-dropdown-menu' %}
+{% endcomment %}
+<style>
+  detail ul.header__submenu{
+    display:none;
+  }
+  img{
+    max-width: 100%;
+  }
+  detail:hover ul.header__submenu {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    right: 0;
+    z-index: 1;
+  }
+  .menu-item.menu-0{
+    column-count: 7;
+  }
+  .menu-item.menu-0 li {
+    position: relative;
+  }
+  .menu-item.menu-1 {
+    column-count: 4;
+  }
+  .menu-item.menu-2 {
+    column-count: 4;
+  }
+  detail#Details-HeaderMenu-4 {
+    position: relative;
+  }
+  .menu-item.menu-3 {
+    background: #fff;
+    padding: 10px 0 10px;
+  }
+  .menu-item.menu-3 li a {
+    white-space: nowrap;
+  }
+  .menu-item.menu-3 .header__menu-item {
+    padding: 10px 16px;
+    width: 100%;
+    display: flex;
+  }
+  ul#HeaderMenu-SubMenuList-pages-blog- {
+    position: absolute;
+    left: 100%;
+    top: -20px;
+    box-shadow: 0px 40px 10px 1px gray;
+  }
+  detail#Details-HeaderSubMenu-pages-blog:hover ul.subchild-menu {
+    display: block !important;
+    padding:0;
+  }
+  .child-menu{
+    background: #fff;
+    width: fit-content;
+    padding:15px 0 15px;
+  }
+  summary#HeaderMenu-pages-blog:after {
+    content: "";
+    display: block;
+    background: transparent;
+    width: 100%;
+    right: -30px;
+    height: 100%;
+    position: absolute;
+  }
+  .foxkit-image.hide {
+    display: none;
+  }
+  .image-menu li:hover ul.subchild-menu {
+      display: block !important;
+  }
+  .image-menu li ul.subchild-menu {
+      display: none !important;
+  }
+  .menu-item.menu-3 li {
+    margin: 16px 16px 0;
+  }
+  .header__menu-item:hover {
+    background:#eee;
+  }
+  ul#HeaderMenu-MenuList-4 {
+    left: 0;
+    right: unset;
+    background: transparent;
+    width: 0;
+    margin: 0;
+    max-width: 0;
+    box-shadow: none;
+    border: none;
+    min-width: fit-content;
+  }
+  .menu-item{
+    column-rule: 1px solid #eee;
+    column-gap: 36px;
+  }
+  .image-menu{
+    max-width:1520px;
+    margin:0 auto;
+    padding:0 15px;
+  }
+  .image-menu {
+    display: flex;
+    justify-content: space-between;
+  }
+  .header .header__submenu.list-menu,
+  .header__submenu .image-menu {
+    padding: 30px 0 30px;
+  }
+  
+  .header ul#HeaderMenu-MenuList-4,
+  ul#HeaderMenu-MenuList-4 .image-menu {
+    padding:0;
+  }
+  .menu-item.menu-4 {
+    column-count: 4;
+  }
+  .header__menu-item s {
+    text-decoration: none;
+  }
+  .menu-item .header__menu-item {
+    position: relative;
+    display: inline-block;
+    line-height: unset;
+    position:relative;
+    padding-block: 8px !important;
+  }
+  .menu-item.menu-0 .header__menu-item{
+    padding: 8px 83px 8px 12px !important;
+  }
+  .header .header__menu-item{
+    color: #000;
+    font-size: 16px;
+    line-height: 19px;
+    white-space: nowrap;
+  }
+  .header .header__submenu .header__menu-item:hover {
+    text-decoration-line: none;
+  }
+  .menu-item li:hover {
+    background: #efefef;
+  }
+  .header .header__menu-item:hover span {
+    text-decoration: none;
+    text-underline-offset: unset;
+  }
+  .menu-item .header__menu-item span{
+    font-size: 12px;
+    text-transform: capitalize;
+    width: 42px;
+    font-weight: 500;
+    border-radius: 11px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 4px;
+    right: 35px;
+    color: rgba(218, 63, 63, 1);
+    background: rgba(255, 231, 231, 1);
+  }
+  .product-collection,.slider-collection {
+    display: block;
+  }
+  .products-content swiper-container.mySwiper{
+    max-width:417px;
+    height: auto;
+  }
+  .product-heading h2 {
+    margin: 0 0 10px;
+  }
+  .collections-image a {
+    color: #000;
+    text-decoration: none;
+  }
+  .collections-image h4, .collections-image p {
+    margin: 0;
+    text-align: start;
+  }
+  .collections-image p{
+    padding-top:10px;
+    font-size: 14px;
+    display:flex;
+    gap:8px;
+  }
+  .product-heading {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    justify-content: space-between;
+  }
+  .header-product-slider {
+    display: flex;
+    gap: 20px;
+  }
+  .header-product-slider .swiper-button i {
+    background: transparent;
+    color: #000;
+    border: 1px solid #eee;
+    border-radius: 50px;
+    width: 10px;
+    height: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    scale: 1;
+    transition: scale 0.5s ease;
+  }
+  .header-product-slider .swiper-button i:hover {
+    background: #000;
+    color: #fff;
+    scale: 1.1;
+  }
+  .child-menu svg.icon.icon-caret {
+    transform: rotate(-90deg);
+  }
+</style>
+<nav class="header__inline-menu">
+  <ul class="list-menu list-menu--inline" role="list">
+    {%- for link in section.settings.menu.links -%}
+      <li>
+        {%- if link.links != blank -%}
+          <header-menu>
+            <detail id="Details-HeaderMenu-{{ forloop.index }}">
+              <summary
+                id="HeaderMenu-{{ link.handle }}"
+                class="header__menu-item list-menu__item link focus-inset"
+              >
+                <span
+                  {%- if link.child_active %}
+                    class="header__active-menu-item"
+                  {% endif %}
+                >
+                  {{- link.title -}}
+                </span>
+                {% render 'icon-caret' %}
+              </summary>
+              <ul
+                id="HeaderMenu-MenuList-{{ forloop.index }}"
+                class="header__submenu list-menu list-menu--disclosure color-{{ section.settings.menu_color_scheme }} gradient caption-large motion-reduce global-settings-popup"
+                role="list"
+                tabindex="-1"
+              >
+                <div class="image-menu">
+                  <div class="menu-item menu-{{ forloop.index0 }}">
+                    {%- for childlink in link.links -%}
+                      <li>
+                        {%- if childlink.links == blank -%}
+                          <a
+                            id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                            href="{{ childlink.url }}"
+                            class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if childlink.current %} list-menu__item--active{% endif %}"
+                            {% if childlink.current %}
+                              aria-current="page"
+                            {% endif %}
+                          >
+                            {{ childlink.title }}
+                          </a>
+                        {%- else -%}
+                          <detail id="Details-HeaderSubMenu-{{ link.handle }}-{{ childlink.handle }}">
+                            <summary
+                              id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}"
+                              class="header__menu-item child-menu link link--text list-menu__item focus-inset caption-large"
+                            >
+                              <s>{{ childlink.title | escape }}</s>
+                              {% render 'icon-caret' %}
+                            </summary>
+                            <ul
+                              id="HeaderMenu-SubMenuList-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                              class="header__submenu subchild-menu list-menu motion-reduce"
+                            >
+                              <div class="child-menu">
+                                {%- for grandchildlink in childlink.links -%}
+                                  <li>
+                                    <a
+                                      id="HeaderMenu-{{ link.handle }}-{{ childlink.handle }}-{{ grandchildlink.handle }}"
+                                      href="{{ grandchildlink.url }}"
+                                      class="header__menu-item list-menu__item link link--text focus-inset caption-large{% if grandchildlink.current %} list-menu__item--active{% endif %}"
+                                      {% if grandchildlink.current %}
+                                        aria-current="page"
+                                      {% endif %}
+                                    >
+                                      {{ grandchildlink.title | escape }}
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </div>
+                            </ul>
+                          </detail>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                  </div>
+                  {% if link.title contains 'Shops' %}
+                    <div class="Shop-Content">
+                      {% for block in section.blocks %}
+                        {% if block.type == 'shop_image' %}
+                          <div class="shops-image">
+                            {% if block.settings.shops_image != blank %}
+                              <div class="sale-image">
+                                <a href="{{ block.settings.image_url }}">
+                                  <img src="{{ block.settings.shops_image | image_url }}"  width="" height=""> 
+                                </a>
+                              </div>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% if link.title contains 'FoxKit' %}
+                  <div class="foxkit-Content">
+                    {% for block in section.blocks %}
+                      {% if block.type == 'foxkit_image' %}
+                        <div class="foxkit-image {% if block.settings.foxkit_shops_image == blank %}hide{% endif %}">
+                          {% if block.settings.foxkit_shops_image != blank %}
+                            <div class="foxkit-sale-image">
+                              <a href="{{ block.settings.foxkit_image_url }}">
+                                <img src="{{ block.settings.foxkit_shops_image | image_url }}" width="" height="" >
+                              </a>
+                            </div>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                 {% if link.title contains 'Products' %}
+                  <div class="products-content">
+                  {% for block in section.blocks %}
+                    {% if block.type == 'colection_image' %}
+                      <div class="product-heading">
+                        <h2>{{ block.settings.product_head }}</h2>
+                        <div class="header-product-slider">
+                          <div class="swiper-button image-swiper-button-prev"><i class="fa-solid fa-angle-left"></i></div>
+                          <div class="swiper-button image-swiper-button-next"><i class="fa-solid fa-angle-right"></i></div>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                  
+                  <swiper-container class="mySwiper" navigation="true" slides-per-view="2" space-between="30" 
+                    navigation-next-el=".image-swiper-button-next"
+                    navigation-prev-el=".image-swiper-button-prev"
+                    loop="true">									
+                    {% for block in section.blocks %}
+                      {% if block.type == 'colection_image' %}
+                        {% assign selected_collection = collections[block.settings.collection_select] %}
+                        {% if selected_collection != blank %}
+                          {% for product in selected_collection.products %}
+                            <swiper-slide>
+                              <div class="collections-image">
+                                <a href="{{ product.url }}">
+                                  <img src="{{ product.featured_image | image_url }}" width="" height="">
+                                  <h4>{{ product.title }}</h4>
+                                  <p>{{ product.price | money }} <s>{{ product.compare_at_price | money }}</s></p>
+                                </a>
+                              </div>
+                            </swiper-slide>
+                          {% endfor %}
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                  </swiper-container>
+                </div>
+                {% endif %}
+                </div>
+              </ul>
+            </detail>
+          </header-menu>
+        {%- else -%}
+          <a
+            id="HeaderMenu-{{ link.handle }}"
+            href="{{ link.url }}"
+            class="header__menu-item list-menu__item link link--text focus-inset"
+            {% if link.current %}
+              aria-current="page"
+            {% endif %}
+          >
+            <span
+              {%- if link.current %}
+                class="header__active-menu-item"
+              {% endif %}
+            >
+              {{- link.title | escape -}}
+            </span>
+          </a>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var menuItems = document.querySelectorAll('.menu-item .header__menu-item span');
+    menuItems.forEach(function(item) {
+      if (item.textContent.trim() === 'New') {
+        item.style.color = 'rgba(58, 144, 118, 1)';
+        item.style.background = 'rgba(213, 251, 239, 1)';
+      }
+    });
+  });
+</script>
